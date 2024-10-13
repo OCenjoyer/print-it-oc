@@ -24,7 +24,6 @@ const diaporama = [
   const imageDiaporama = document.querySelector('.banner-img');
   const pointsContainer = document.querySelector('.dots');
   
-  // Création des points
   diaporama.forEach((slide, index) => {
 	const point = document.createElement('div');
 	point.classList.add('dot');
@@ -64,6 +63,9 @@ const diaporama = [
 	const slideActuel = diaporama[indiceActuel];
 	imageDiaporama.src = `./assets/images/slideshow/${slideActuel.image}`;
 	imageDiaporama.alt = slideActuel.legende;
+	
+	const legendeElement = document.querySelector('#banner p');
+	legendeElement.innerHTML = slideActuel.legende;
   }
   
   function updatePoints() {
