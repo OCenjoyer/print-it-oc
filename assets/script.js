@@ -22,6 +22,17 @@ const diaporama = [
   const flecheGauche = document.querySelector('.arrow_left');
   const flecheDroite = document.querySelector('.arrow_right');
   const imageDiaporama = document.querySelector('.banner-img');
+  const pointsContainer = document.querySelector('.dots');
+  
+  // Création des points
+  diaporama.forEach((slide, index) => {
+	const point = document.createElement('div');
+	point.classList.add('dot');
+	if (index === 0) {
+	  point.classList.add('dot_selected');
+	}
+	pointsContainer.appendChild(point);
+  });
   
   flecheGauche.addEventListener('click', () => {
 	precedentSlide();
@@ -37,6 +48,7 @@ const diaporama = [
 	  indiceActuel = diaporama.length - 1;
 	}
 	afficherImage();
+	updatePoints();
   }
   
   function suivantSlide() {
@@ -45,12 +57,23 @@ const diaporama = [
 	  indiceActuel = 0;
 	}
 	afficherImage();
+	updatePoints();
   }
   
   function afficherImage() {
 	const slideActuel = diaporama[indiceActuel];
 	imageDiaporama.src = `./assets/images/slideshow/${slideActuel.image}`;
 	imageDiaporama.alt = slideActuel.legende;
+  }
+  
+  function updatePoints() {
+	const points = document.querySelectorAll('.dot');
+	points.forEach((point, index) => {
+	  point.classList.remove('dot_selected');
+	  if (index === indiceActuel) {
+		point.classList.add('dot_selected');
+	  }
+	});
   }
   
   afficherImage();
