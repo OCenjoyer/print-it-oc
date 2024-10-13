@@ -1,3 +1,4 @@
+// Tableau contenant les données du diaporama : image et légende
 const diaporama = [
 	{
 	  "image": "slide1.jpg",
@@ -17,65 +18,75 @@ const diaporama = [
 	}
   ];
   
+  // Variable pour suivre l'indice de la diapositive actuelle
   let indiceActuel = 0;
   
+  // Sélection des éléments du DOM pour les flèches, l'image et les points
   const flecheGauche = document.querySelector('.arrow_left');
   const flecheDroite = document.querySelector('.arrow_right');
   const imageDiaporama = document.querySelector('.banner-img');
   const pointsContainer = document.querySelector('.dots');
   
+  // Création des points indicateurs pour chaque diapositive
   diaporama.forEach((slide, index) => {
-	const point = document.createElement('div');
-	point.classList.add('dot');
+	const point = document.createElement('div'); // Création d'un élément <div> pour chaque point
+	point.classList.add('dot'); // Ajout de la classe 'dot'
 	if (index === 0) {
-	  point.classList.add('dot_selected');
+	  point.classList.add('dot_selected'); // Sélection du point correspondant à la première diapositive
 	}
-	pointsContainer.appendChild(point);
+	pointsContainer.appendChild(point); // Ajout du point au conteneur des points
   });
   
+  // Ajout d'événements pour les flèches de navigation
   flecheGauche.addEventListener('click', () => {
-	precedentSlide();
+	precedentSlide(); // Appelle la fonction pour passer à la diapositive précédente
   });
   
   flecheDroite.addEventListener('click', () => {
-	suivantSlide();
+	suivantSlide(); // Appelle la fonction pour passer à la diapositive suivante
   });
   
+  // Fonction pour passer à la diapositive précédente
   function precedentSlide() {
-	indiceActuel--;
+	indiceActuel--; // Décrémente l'indice actuel
 	if (indiceActuel < 0) {
-	  indiceActuel = diaporama.length - 1;
+	  indiceActuel = diaporama.length - 1; // Revient à la dernière diapositive si l'indice est inférieur à 0
 	}
-	afficherImage();
-	updatePoints();
+	afficherImage(); // Met à jour l'image affichée
+	updatePoints(); // Met à jour l'affichage des points
   }
   
+  // Fonction pour passer à la diapositive suivante
   function suivantSlide() {
-	indiceActuel++;
+	indiceActuel++; // Incrémente l'indice actuel
 	if (indiceActuel >= diaporama.length) {
-	  indiceActuel = 0;
+	  indiceActuel = 0; // Revient à la première diapositive si l'indice dépasse le nombre de diapositives
 	}
-	afficherImage();
-	updatePoints();
+	afficherImage(); // Met à jour l'image affichée
+	updatePoints(); // Met à jour l'affichage des points
   }
   
+  // Fonction pour afficher l'image et la légende correspondant à la diapositive actuelle
   function afficherImage() {
-	const slideActuel = diaporama[indiceActuel];
-	imageDiaporama.src = `./assets/images/slideshow/${slideActuel.image}`;
-	imageDiaporama.alt = slideActuel.legende;
-	
-	const legendeElement = document.querySelector('#banner p');
-	legendeElement.innerHTML = slideActuel.legende;
+	const slideActuel = diaporama[indiceActuel]; // Récupère les données de la diapositive actuelle
+	imageDiaporama.src = `./assets/images/slideshow/${slideActuel.image}`; // Met à jour la source de l'image
+	imageDiaporama.alt = slideActuel.legende; // Met à jour l'attribut alt de l'image avec la légende
+  
+	const legendeElement = document.querySelector('#banner p'); // Sélectionne l'élément de la légende
+	legendeElement.innerHTML = slideActuel.legende; // Met à jour le contenu HTML de la légende
   }
   
+  // Fonction pour mettre à jour l'affichage des points indicateurs
   function updatePoints() {
-	const points = document.querySelectorAll('.dot');
+	const points = document.querySelectorAll('.dot'); // Sélectionne tous les points
 	points.forEach((point, index) => {
-	  point.classList.remove('dot_selected');
+	  point.classList.remove('dot_selected'); // Retire la classe 'dot_selected' de tous les points
 	  if (index === indiceActuel) {
-		point.classList.add('dot_selected');
+		point.classList.add('dot_selected'); // Ajoute la classe 'dot_selected' au point correspondant à l'indice actuel
 	  }
 	});
   }
   
+  // Affiche l'image et la légende de la première diapositive au chargement
   afficherImage();
+  
